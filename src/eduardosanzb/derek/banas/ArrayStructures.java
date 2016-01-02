@@ -74,7 +74,7 @@ public class ArrayStructures{
 
       public void linearSearch(int value){
          boolean doesExist = false;
-        System.out.print("The " + value + " is found in the index: ");
+        System.out.print("Linear: The " + value + " is found in the index: ");
         for (int i = 0; i < arraySize; i++) {
           if (theArray[i] == value) {
             doesExist = true;
@@ -84,7 +84,7 @@ public class ArrayStructures{
         System.out.println();
 
         if(!doesExist){
-          System.out.println(" value does not exist in the Array.");
+          System.out.println("Linear: value does not exist in the Array.");
         }
       }
 
@@ -112,18 +112,39 @@ public class ArrayStructures{
       public void binarySearch(int value){
         int minIndex = 0;
         int maxIndex = arraySize-1;
-
         while(minIndex <= maxIndex){
-          int midIndex = ( minIndex + maxIndex ) / 2;
-
-          if( theArray[midIndex] < value ) minIndex = midIndex +  1;
+          int midIndex = ( maxIndex + minIndex ) / 2;
+          if( theArray[midIndex] == value || midIndex == 0){
+            if ( theArray[midIndex] == value ) System.out.println("\n Binary: The value is at the index: " + midIndex);
+            else System.out.println("\n Binary: The value is not in the array."); 
+            minIndex = maxIndex + 100;
+          }
+          else if(theArray[midIndex] < value ) minIndex = midIndex +  1;
           else if(theArray[midIndex] > value) maxIndex = midIndex - 1;
-          else if (theArray[midIndex] == value){
-            System.out.println("\n The value is at the index: " + midIndex);
-            minIndex = maxIndex + 1;
-          } 
-          else System.out.println("The value is not in the array.");
         }
+      }
+
+      public void selectionSort(){
+        for (int i = 0; i < arraySize ; i++ ) {
+          int lower = i;
+          for (int j = i; j < arraySize; j++) {
+            if( theArray[lower] > theArray[j]) lower = j;
+            swapValues(i, lower);
+          }
+        }
+      }
+
+      public void insertSort(){
+          for (int i = 1; i < arraySize; i++) {
+            int j = i;
+            int insertTo = theArray[i];
+            while(j > 0 && theArray[j-1] > insertTo){
+              theArray[j] = theArray[j-1];
+              j--;
+            }
+            theArray[j] = insertTo;
+
+          }
       }
     
     public void swapValues(int i, int j){
@@ -145,8 +166,12 @@ public class ArrayStructures{
       newArray.insertValueAtIndex(1,100);
       newArray.printArray();
       newArray.linearSearch(12);
-      newArray.bubbleSort("desc");
+      //newArray.bubbleSort("desc");
+      //newArray.printArray();
+      ///newArray.binarySearch(9);
+
+      newArray.insertSort();
       newArray.printArray();
-      newArray.binarySearch(9);
+
     }
 }
